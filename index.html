@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password Complexity Checker | Prodigy Infotech</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --violet: #6366f1;
+      --bg: #fdfaf6;
+      --card-bg: #ffffff;
+      --ink: #1c1917;
+      --coral: #ff6b6b;
+      --mustard: #ffbe0b;
+      --mint: #06d6a0;
+      --sky: #4cc9f0;
+      --border-radius-hand: 255px 15px 225px 15px/15px 225px 15px 255px;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg);
+      background-image: radial-gradient(#e5e7eb 1.5px, transparent 1.5px);
+      background-size: 24px 24px;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+      color: var(--ink);
+    }
+
+    .card {
+      position: relative;
+      background: var(--card-bg);
+      border: 3px solid var(--ink);
+      border-radius: var(--border-radius-hand);
+      padding: 40px;
+      max-width: 520px;
+      width: 100%;
+      box-shadow: 8px 8px 0px var(--ink);
+      transition: transform 0.2s ease;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--ink);
+      background: #e0f2fe;
+      border: 2px solid var(--ink);
+      border-radius: 30px;
+      padding: 4px 14px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      color: #6b7280;
+      font-size: 14px;
+      margin-bottom: 28px;
+      font-style: italic;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 2px solid var(--ink);
+      background: #f3f4f6;
+    }
+
+    .status-badge.online {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .status-badge.offline {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .input-wrapper {
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    input {
+      width: 100%;
+      padding: 16px 56px 16px 20px;
+      font-size: 16px;
+      font-weight: 600;
+      background: #fff;
+      border: 3px solid var(--ink);
+      border-radius: var(--border-radius-hand);
+      color: var(--ink);
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    input:focus {
+      background: #fafafa;
+      box-shadow: 4px 4px 0px var(--violet);
+    }
+
+    input::placeholder {
+      color: #9ca3af;
+      font-weight: 400;
+    }
+
+    .toggle-btn {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      color: var(--ink);
+      cursor: pointer;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .loader {
+      position: absolute;
+      right: 52px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--coral);
+      opacity: 0;
+      animation: pulse 0.6s ease-in-out infinite;
+    }
+
+    .loader.active { opacity: 1; }
+
+    @keyframes pulse {
+      0%, 100% { transform: translateY(-50%) scale(0.8); }
+      50% { transform: translateY(-50%) scale(1.4); }
+    }
+
+    .meter-section {
+      margin-bottom: 24px;
+    }
+
+    .meter-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .meter-word {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .meter-len {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ink);
+      background: #fef08a;
+      border: 2px solid var(--ink);
+      padding: 2px 10px;
+      border-radius: 6px;
+      transform: rotate(-2deg);
+    }
+
+    .dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      flex: 1;
+      height: 12px;
+      border: 2px solid var(--ink);
+      border-radius: 4px;
+      background: #f3f4f6;
+      transition: background-color 0.2s ease;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: #fff;
+      border: 2px solid var(--ink);
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      box-shadow: 2px 2px 0px var(--ink);
+    }
+
+    .chip:nth-child(odd) { transform: rotate(-1deg); }
+    .chip:nth-child(even) { transform: rotate(1deg); }
+
+    .chip.met {
+      background: #d1fae5;
+      box-shadow: 2px 2px 0px #06d6a0;
+    }
+
+    .chip-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #d1d5db;
+      border: 1px solid var(--ink);
+    }
+
+    .chip.met .chip-dot { background: #06d6a0; }
+
+    .feedback {
+      padding: 18px;
+      background: #fff;
+      border: 2px dashed var(--ink);
+      border-radius: 16px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .feedback.glow {
+      background: #f0fdf4;
+      border-style: solid;
+      border-color: #06d6a0;
+    }
+
+    .fb-emoji { font-size: 28px; line-height: 1; }
+    .fb-title { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 2px; }
+    .fb-msg { font-size: 13px; color: #4b5563; line-height: 1.4; }
+
+    .suggest-btn {
+      width: 100%;
+      justify-content: center;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+      padding: 14px 24px;
+      background: #ffb703;
+      border: 3px solid var(--ink);
+      border-radius: var(--border-radius-hand);
+      color: var(--ink);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 4px 4px 0px var(--ink);
+      transition: all 0.1s ease;
+    }
+
+    .suggest-btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0px var(--ink);
+    }
+
+    .suggest-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px var(--ink);
+    }
+
+    .suggestion-box {
+      margin-top: 14px;
+      padding: 16px;
+      background: #fef3c7;
+      border: 2px solid var(--ink);
+      border-radius: 12px;
+      box-shadow: 4px 4px 0px rgba(0,0,0,0.05);
+      display: none;
+    }
+
+    .suggestion-box.show { display: block; }
+    .suggestion-box .suggestion {
+      padding: 8px 0;
+      font-family: 'Space Grotesk', monospace;
+      font-weight: 700;
+      color: #b45309;
+      font-size: 14px;
+      border-bottom: 1px dashed rgba(0,0,0,0.1);
+    }
+    .suggestion-box .suggestion:last-child { border-bottom: none; }
+
+    .footer {
+      text-align: center;
+      margin-top: 32px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #6b7280;
+    }
+
+    .footer span {
+      text-decoration: underline;
+      color: var(--ink);
+    }
+
+    @media (max-width: 520px) {
+      .card { padding: 24px 16px; }
+      h1 { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <div class="badge">🔐 PRODIGY INFOTECH · TASK-03</div>
+  <h1>Password<br>Complexity Checker</h1>
+  <p class="subtitle">Real-time analysis · 5-layer security · Zero data storage</p>
+
+  <div style="text-align: center; margin-bottom: 20px;">
+    <span class="status-badge online" id="statusBadge">✅ Client-Side Mode</span>
+  </div>
+
+  <div class="input-wrapper">
+    <input type="password" id="password" placeholder="Type your password..." autocomplete="off">
+    <div class="loader" id="loader"></div>
+    <button class="toggle-btn" id="toggleBtn" aria-label="Toggle visibility">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="meter-section">
+    <div class="meter-row">
+      <span class="meter-word" id="strengthWord">⚡ Ready</span>
+      <span class="meter-len" id="lengthDisplay">0 chars</span>
+    </div>
+    <div class="dots" id="dots">
+      <div class="dot" id="d0"></div><div class="dot" id="d1"></div>
+      <div class="dot" id="d2"></div><div class="dot" id="d3"></div><div class="dot" id="d4"></div>
+    </div>
+  </div>
+
+  <div class="chips" id="chips">
+    <div class="chip" id="c-len"><span class="chip-dot"></span>📏 ≥8 characters</div>
+    <div class="chip" id="c-up"><span class="chip-dot"></span>🔠 Uppercase</div>
+    <div class="chip" id="c-lo"><span class="chip-dot"></span>🔡 Lowercase</div>
+    <div class="chip" id="c-num"><span class="chip-dot"></span>🔢 Number</div>
+    <div class="chip" id="c-spc"><span class="chip-dot"></span>✨ Special char</div>
+  </div>
+
+  <div class="feedback" id="feedback">
+    <div class="fb-emoji" id="fbEmoji">💡</div>
+    <div>
+      <div class="fb-title" id="fbTitle">Ready to check</div>
+      <div class="fb-msg" id="fbMsg">Start typing — instant strength analysis with security recommendations</div>
+    </div>
+  </div>
+
+  <button class="suggest-btn" id="suggestBtn">✨ Generate Strong Password</button>
+  <div class="suggestion-box" id="suggestionBox">
+    <div class="suggestion" id="suggestion1"></div>
+    <div class="suggestion" id="suggestion2"></div>
+    <div class="suggestion" id="suggestion3"></div>
+  </div>
+
+  <div class="footer">🚀 Powered by <span>Prodigy Infotech</span> · 100% Client-side validation · Developed with ❤️ By Nitish Sharma</div>
+</div>
+
+<script>
+// ============================================
+// PASSWORD COMPLEXITY CHECKER - PURE CLIENT SIDE
+// No backend required - 100% working
+// ============================================
+
+// DOM Elements
+const passwordInput = document.getElementById('password');
+const toggleBtn = document.getElementById('toggleBtn');
+const loader = document.getElementById('loader');
+const strengthWord = document.getElementById('strengthWord');
+const lengthDisplay = document.getElementById('lengthDisplay');
+const dots = document.querySelectorAll('.dot');
+const chips = {
+  length: document.getElementById('c-len'),
+  uppercase: document.getElementById('c-up'),
+  lowercase: document.getElementById('c-lo'),
+  number: document.getElementById('c-num'),
+  special: document.getElementById('c-spc')
+};
+const feedback = document.getElementById('feedback');
+const fbEmoji = document.getElementById('fbEmoji');
+const fbTitle = document.getElementById('fbTitle');
+const fbMsg = document.getElementById('fbMsg');
+const suggestBtn = document.getElementById('suggestBtn');
+const suggestionBox = document.getElementById('suggestionBox');
+const suggestions = [
+  document.getElementById('suggestion1'),
+  document.getElementById('suggestion2'),
+  document.getElementById('suggestion3')
+];
+const statusBadge = document.getElementById('statusBadge');
+
+let isVisible = false;
+let debounceTimer = null;
+
+// Password strength levels
+const STRENGTH_DATA = {
+  0: { label: 'Very Weak 🔴', color: '#ff6b6b', emoji: '💀', title: 'Very Weak!', msg: 'Too weak! Add uppercase, numbers & special characters.' },
+  1: { label: 'Weak 🟠', color: '#ff9f43', emoji: '😰', title: 'Weak Password', msg: 'Very weak! Add uppercase letters and numbers.' },
+  2: { label: 'Fair 🟡', color: '#ffbe0b', emoji: '😐', title: 'Fair Password', msg: 'Fair password, needs improvement. Add special characters.' },
+  3: { label: 'Good 🟢', color: '#2ecc71', emoji: '🙂', title: 'Good Password', msg: 'Good password! Almost there. Add a special character.' },
+  4: { label: 'Strong 💪', color: '#06d6a0', emoji: '😊', title: 'Strong Password', msg: 'Strong password! Great job! Consider making it 12+ chars.' },
+  5: { label: 'Excellent ⚡', color: '#4cc9f0', emoji: '🎉', title: 'Excellent Password!', msg: 'Perfect password! All criteria met! Keep it safe.' }
+};
+
+// Common passwords blacklist
+const COMMON_PASSWORDS = [
+  'password', '123456', '123456789', 'qwerty', 'abc123', 'password1',
+  '12345', '12345678', 'iloveyou', 'admin', 'welcome', 'monkey',
+  'letmein', 'dragon', 'master', 'sunshine', 'princess', 'pokemon',
+  'shadow', 'superman', 'qwertyuiop', '123123', 'football', 'baseball'
+];
+
+// Toggle password visibility
+toggleBtn.addEventListener('click', () => {
+  isVisible = !isVisible;
+  passwordInput.type = isVisible ? 'text' : 'password';
+  const svg = toggleBtn.querySelector('svg');
+  if (isVisible) {
+    svg.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>';
+  } else {
+    svg.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+  }
+});
+
+// Check password strength
+function checkPasswordStrength(password) {
+  // Criteria
+  const criteria = {
+    length: password.length >= 8,
+    uppercase: /[A-Z]/.test(password),
+    lowercase: /[a-z]/.test(password),
+    number: /[0-9]/.test(password),
+    special: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?]/.test(password)
+  };
+  
+  // Check against common passwords
+  const isCommon = COMMON_PASSWORDS.includes(password.toLowerCase());
+  
+  // Calculate score
+  let score = Object.values(criteria).filter(Boolean).length;
+  
+  // Penalty for common passwords
+  if (isCommon) {
+    score = Math.min(1, score);
+  }
+  
+  // Bonus for length >= 12
+  if (password.length >= 12 && score >= 4) {
+    score = Math.min(5, score + 0.5);
+  }
+  
+  const finalScore = Math.min(5, Math.floor(score));
+  const strength = STRENGTH_DATA[finalScore];
+  
+  // Generate detailed feedback
+  const feedbackMessages = [];
+  
+  if (isCommon) {
+    feedbackMessages.push('⚠️ This is a commonly used password!');
+  }
+  if (password.length < 8) {
+    feedbackMessages.push('📏 Make it at least 8 characters');
+  }
+  if (!criteria.uppercase) {
+    feedbackMessages.push('🔠 Add uppercase letters (A-Z)');
+  }
+  if (!criteria.lowercase) {
+    feedbackMessages.push('🔡 Add lowercase letters (a-z)');
+  }
+  if (!criteria.number) {
+    feedbackMessages.push('🔢 Add numbers (0-9)');
+  }
+  if (!criteria.special) {
+    feedbackMessages.push('✨ Add special characters (!@#$%^&*)');
+  }
+  
+  return {
+    score: finalScore,
+    strength: strength.label,
+    color: strength.color,
+    emoji: strength.emoji,
+    title: strength.title,
+    msg: feedbackMessages.length > 0 ? feedbackMessages[0] : strength.msg,
+    criteria: criteria,
+    length: password.length,
+    isCommon: isCommon,
+    allFeedback: feedbackMessages
+  };
+}
+
+// Render results
+function render(data) {
+  const { score, strength, color, emoji, title, msg, criteria, length } = data;
+  
+  // Update dots
+  dots.forEach((dot, i) => {
+    if (i < score) {
+      dot.style.background = color;
+    } else {
+      dot.style.background = '#f3f4f6';
+    }
+  });
+  
+  // Update strength word
+  strengthWord.textContent = strength;
+  strengthWord.style.color = color;
+  
+  // Update length
+  lengthDisplay.textContent = length + (length !== 1 ? ' chars' : ' char');
+  
+  // Update chips
+  setChip(chips.length, criteria.length);
+  setChip(chips.uppercase, criteria.uppercase);
+  setChip(chips.lowercase, criteria.lowercase);
+  setChip(chips.number, criteria.number);
+  setChip(chips.special, criteria.special);
+  
+  // Update feedback
+  fbEmoji.textContent = emoji;
+  fbTitle.textContent = title;
+  fbMsg.textContent = msg;
+  
+  // Glow effect for excellent passwords
+  if (score === 5) {
+    feedback.classList.add('glow');
+  } else {
+    feedback.classList.remove('glow');
+  }
+}
+
+// Set chip status
+function setChip(el, met) {
+  if (met && !el.classList.contains('met')) {
+    el.classList.add('met');
+  } else if (!met) {
+    el.classList.remove('met');
+  }
+}
+
+// Reset UI
+function resetUI() {
+  dots.forEach(dot => {
+    dot.style.background = '#f3f4f6';
+  });
+  strengthWord.textContent = '⚡ Ready';
+  strengthWord.style.color = 'var(--ink)';
+  lengthDisplay.textContent = '0 chars';
+  
+  Object.values(chips).forEach(chip => chip.classList.remove('met'));
+  
+  fbEmoji.textContent = '💡';
+  fbTitle.textContent = 'Ready to check';
+  fbMsg.textContent = 'Start typing — instant strength analysis with security recommendations';
+  feedback.classList.remove('glow');
+}
+
+// Generate strong password
+function generateStrongPassword() {
+  const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const lower = 'abcdefghijklmnopqrstuvwxyz';
+  const numbers = '0123456789';
+  const special = '!@#$%^&*';
+  const all = upper + lower + numbers + special;
+  
+  let password = '';
+  password += upper[Math.floor(Math.random() * upper.length)];
+  password += lower[Math.floor(Math.random() * lower.length)];
+  password += numbers[Math.floor(Math.random() * numbers.length)];
+  password += special[Math.floor(Math.random() * special.length)];
+  
+  for (let i = 4; i < 16; i++) {
+    password += all[Math.floor(Math.random() * all.length)];
+  }
+  
+  return password.split('').sort(() => Math.random() - 0.5).join('');
+}
+
+// Generate suggestions
+function generateSuggestions() {
+  suggestionBox.classList.add('show');
+  for (let i = 0; i < 3; i++) {
+    suggestions[i].textContent = `${i + 1}. ${generateStrongPassword()}`;
+  }
+}
+
+// Handle password input
+passwordInput.addEventListener('input', () => {
+  const password = passwordInput.value;
+  
+  if (!password) {
+    resetUI();
+    return;
+  }
+  
+  // Show loader
+  loader.classList.add('active');
+  clearTimeout(debounceTimer);
+  
+  debounceTimer = setTimeout(() => {
+    const result = checkPasswordStrength(password);
+    render(result);
+    loader.classList.remove('active');
+  }, 300);
+});
+
+// Suggest button
+suggestBtn.addEventListener('click', generateSuggestions);
+
+// Enter key
+passwordInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    const password = passwordInput.value;
+    if (password) {
+      const result = checkPasswordStrength(password);
+      render(result);
+    }
+  }
+});
+
+// Status badge - show client-side mode
+statusBadge.textContent = '✅ Client-Side Mode';
+statusBadge.className = 'status-badge online';
+
+console.log('🔐 Password Complexity Checker loaded successfully!');
+console.log('📝 All checks are performed client-side for privacy.');
+</script>
+</body>
+</html>

@@ -23,15 +23,15 @@
 
 [![Live Demo](https://img.shields.io/badge/🚀%20Live%20Demo-Click%20to%20Launch-6366f1?style=for-the-badge&logoColor=white)](https://password-complexity.enthemexploits.workers.dev/)
 [![MIT License](https://img.shields.io/badge/📄%20License-MIT-22c55e?style=for-the-badge)](LICENSE)
-[![Version](https://img.shields.io/badge/🏷️%20Version-v1.0.0-3b82f6?style=for-the-badge)](https://github.com/enthem-nitish/task1-password-complexity/releases)
+[![Version](https://img.shields.io/badge/🏷️%20Version-v1.0.0-3b82f6?style=for-the-badge)](https://github.com/enthem-nitish/task3-password-complexity/releases)
 [![Status](https://img.shields.io/badge/✅%20Status-Active-10b981?style=for-the-badge)](https://password-complexity.enthemexploits.workers.dev/)
 
 <br>
 
-[![GitHub Stars](https://img.shields.io/github/stars/enthem-nitish/task1-password-complexity?style=social&label=⭐%20Stars)](https://github.com/enthem-nitish/task1-password-complexity)
-[![GitHub Forks](https://img.shields.io/github/forks/enthem-nitish/task1-password-complexity?style=social&label=🍴%20Forks)](https://github.com/enthem-nitish/task1-password-complexity/fork)
-[![GitHub Issues](https://img.shields.io/github/issues/enthem-nitish/task1-password-complexity?label=🐛%20Issues)](https://github.com/enthem-nitish/task1-password-complexity/issues)
-[![Last Commit](https://img.shields.io/github/last-commit/enthem-nitish/task1-password-complexity?label=📅%20Last%20Commit)](https://github.com/enthem-nitish/task1-password-complexity/commits)
+[![GitHub Stars](https://img.shields.io/github/stars/enthem-nitish/task3-password-complexity?style=social&label=⭐%20Stars)](https://github.com/enthem-nitish/task3-password-complexity)
+[![GitHub Forks](https://img.shields.io/github/forks/enthem-nitish/task3-password-complexity?style=social&label=🍴%20Forks)](https://github.com/enthem-nitish/task3-password-complexity/fork)
+[![GitHub Issues](https://img.shields.io/github/issues/enthem-nitish/task3-password-complexity?label=🐛%20Issues)](https://github.com/enthem-nitish/task3-password-complexity/issues)
+[![Last Commit](https://img.shields.io/github/last-commit/enthem-nitish/task3-password-complexity?label=📅%20Last%20Commit)](https://github.com/enthem-nitish/task3-password-complexity/commits)
 
 </div>
 
@@ -152,10 +152,10 @@ Built as part of the **Prodigy Infotech Internship · Task 03** 🏆
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/enthem-nitish/task1-password-complexity.git
+git clone https://github.com/enthem-nitish/task3-password-complexity.git
 
 # 2. Enter the directory
-cd task1-password-complexity
+cd task3-password-complexity
 
 # 3. Open in browser
 open index.html       # macOS
@@ -173,12 +173,12 @@ Just visit 👉 **[password-complexity.enthemexploits.workers.dev](https://passw
 
 <div align="center">
 
-[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/enthem-nitish/task1-password-complexity)
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/enthem-nitish/task1-password-complexity)
+[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/enthem-nitish/task3-password-complexity)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/enthem-nitish/task3-password-complexity)
 
 [![GitHub Pages](https://img.shields.io/badge/Deploy%20to-GitHub%20Pages-181717?style=for-the-badge&logo=github)](https://pages.github.com/)
 [![Deploy to Render](https://img.shields.io/badge/Deploy%20to-Render-46C3C8?style=for-the-badge&logo=render&logoColor=white)](https://dashboard.render.com/select-repo?type=static)
-[![Deploy to Koyeb](https://img.shields.io/badge/Deploy%20to-Koyeb-121212?style=for-the-badge&logo=koyeb&logoColor=white)](https://app.koyeb.com/deploy?type=git&repository=github.com/enthem-nitish/task1-password-complexity)
+[![Deploy to Koyeb](https://img.shields.io/badge/Deploy%20to-Koyeb-121212?style=for-the-badge&logo=koyeb&logoColor=white)](https://app.koyeb.com/deploy?type=git&repository=github.com/enthem-nitish/task3-password-complexity)
 
 </div>
 
